@@ -47,13 +47,47 @@ class ModelTrainer:
                 "CatBoosting Classifier": CatBoostRegressor(verbose=False),
                 "AdaBoost Regressor": AdaBoostRegressor()
             }
+            params = {
+                "Decision Tree":{
+                    'criterion': ['squared_error', 'friedman_mse', 'absolute_error', 'poisson'],
+                    #'splitter': ['best', 'random'], 
+                },
+                "Random Forest": {
+                    'n_estimators': [8, 16, 32, 64, 128,256],
+                    #'max_features': ['auto', 'sqrt', 'log2'],
+                    #'criterion': ['squared_error', 'absolute_error', 'poisson']
+                },
+                "Gradient Boosting": {
+                    #'loss': ['squared_error', 'absolute_error', 'huber', 'quantile'],
+                    'learning_rate': [.1,.01,.05,.001],
+                    'subsample': [0.6,0.7,.75,.8,0.85,0.9],
+                    'n_estimators': [8, 16, 32, 64, 128,256],
+                    #'max_depth': [3, 5, 7]
+                },
+                "Linear Regression": {},
+                "XGBRegressor":{
+                    'learning_rate': [.1,.01,.05,.001],
+                    'n_estimators': [8, 16, 32, 64, 128,256],
+                },
+                "CatBoosting Regressor": {
+                    'learning_rate': [0.01,0.05,0.1],
+                    'iterations': [30,5,100],
+                    'depth': [6,8,10]
+                },
+                "AdaBoost Regressor": {
+                    'learning_rate': [.1,.01,.05,.001],
+                    'n_estimators': [8, 16, 32, 64,128,256]
+                }
+            }
+            
+            
 
             # ⛔ Also check if you have defined `params`
             # Otherwise remove param=params if not needed
             model_report: dict = evaluate_models(
                 X_train=x_train, y_train=y_train,
                 X_test=x_test, y_test=y_test,
-                models=models
+                models=models, param=params
                 # , param=params  ⛔ remove or fix this line
             )
 
